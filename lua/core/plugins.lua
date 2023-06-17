@@ -14,7 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
     'wbthomason/packer.nvim',
     'ellisonleao/gruvbox.nvim',
-    'rebelot/kanagawa.nvim',
     {
         'catppuccin/nvim',
         name = "catppuccin",
@@ -28,7 +27,19 @@ local plugins = {
             require('lspsaga').setup({})
         end
     },
-
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
+    },
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',

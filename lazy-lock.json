@@ -8,7 +8,6 @@
   "gitsigns.nvim": { "branch": "main", "commit": "e5edefd9976039f5352e0c900f35206770b33a2d" },
   "gruvbox.nvim": { "branch": "main", "commit": "fc66cfbadaf926bc7c2a5e0616d7b8e64f8bd00c" },
   "indentLine": { "branch": "master", "commit": "d15d63bf9c4a74a02470d4bc8ecce53df13e3a75" },
-  "kanagawa.nvim": { "branch": "master", "commit": "5ff1359ea1fa6aa30eedb2db75900b30378a3c17" },
   "lazy.nvim": { "branch": "main", "commit": "c711b4f8a6211a8ea3f3c35f0962ac0b6b8550cc" },
   "lspsaga.nvim": { "branch": "main", "commit": "c7cc005ba2600c3eaf2bddb2b631ecc9d63b2ba8" },
   "lualine.nvim": { "branch": "master", "commit": "84ffb80e452d95e2c46fa29a98ea11a240f7843e" },
@@ -29,5 +28,6 @@
   "vim-fugitive": { "branch": "master", "commit": "5f0d280b517cacb16f59316659966c7ca5e2bea2" },
   "vim-test": { "branch": "master", "commit": "8183037eccad54deb2100a9665157e4405fa4702" },
   "vim-tmux-navigator": { "branch": "master", "commit": "cdd66d6a37d991bba7997d593586fc51a5b37aa8" },
+  "vim-which-key": { "branch": "master", "commit": "004b1b808a7ed2faf9cb004081c56e35396243ee" },
   "vimux": { "branch": "master", "commit": "616fcb4799674a7a809b14ca2dc155bb6ba25788" }
 }
