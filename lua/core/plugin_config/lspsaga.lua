@@ -39,16 +39,16 @@ keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
 -- Show line diagnostics
 -- You can pass argument ++unfocus to
 -- unfocus the show_line_diagnostics floating window
-keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+keymap("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", { desc = "Show Line Diagnostics"})
 
 -- Show buffer diagnostics
-keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+keymap("n", "<leader>lb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
 -- Show workspace diagnostics
-keymap("n", "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
+keymap("n", "<leader>lw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
 
 -- Show cursor diagnostics
-keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+keymap("n", "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
 -- Diagnostic jump
 -- You can use <C-o> to jump back to your previous location

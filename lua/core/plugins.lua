@@ -44,6 +44,9 @@ local plugins = {
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',
     'nvim-treesitter/nvim-treesitter',
+    -- Unfortunatly, this is not working
+    -- 'nvim-treesitter/nvim-treesitter-angular',
+    'princejoogie/tailwind-highlight.nvim',
     'vim-test/vim-test',
     'lewis6991/gitsigns.nvim',
     'preservim/vimux',
@@ -58,6 +61,11 @@ local plugins = {
     'rcarriga/nvim-dap-ui',
     'simrat39/rust-tools.nvim',
 
+    -- various tooling for langs
+    {
+        'jose-elias-alvarez/null-ls.nvim',
+        ft = {'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'lua', 'python', 'rust'},
+    },
     -- completion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
