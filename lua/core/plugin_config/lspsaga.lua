@@ -58,10 +58,11 @@ keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 -- Diagnostic jump with filters such as only jumping to an error
 keymap("n", "[E", function()
   require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end)
+end, { desc = "Diagnostic Jump Prev" })
+
 keymap("n", "]E", function()
   require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-end)
+end, { desc = "Diagnostic Jump Next" })
 
 -- Toggle outline
 keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")

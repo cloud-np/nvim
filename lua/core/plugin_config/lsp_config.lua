@@ -19,6 +19,9 @@ lspsaga.setup({
 vim.keymap.set("n", "gd", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<cr>', { silent = true })
 vim.keymap.set({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
+-- Insert this in your on_attach function
+-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', {noremap = true, silent = true})
+-- vim.cmd [[ autocmd BufWritePre *.ts,*.js lua vim.lsp.buf.formatting() ]]
 vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
 
 lspconfig.lua_ls.setup {
@@ -38,10 +41,6 @@ lspconfig.lua_ls.setup {
   }
 }
 
-lspconfig.solargraph.setup {
-    capabilities = capabilities,
-}
-
 lspconfig.pyright.setup {
     capabilities = capabilities,
     filetypes = { "python" },
@@ -49,9 +48,6 @@ lspconfig.pyright.setup {
 
 lspconfig.tsserver.setup {
   capabilities = capabilities,
-}
-
-lspconfig.tsserver.setup {
   cmd = {"typescript-language-server", "--stdio"},
   filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"},
   root_dir = function(fname)
@@ -63,6 +59,15 @@ lspconfig.tsserver.setup {
 }
 
 lspconfig.angularls.setup {
+  -- To verify that an Angular lsp is installed globally or locally.
+  -- cmd = {"node", "/path/to/angular-language-service/packages/server/index.js", "--stdio"},
+  -- on_new_config = function(new_config, new_root_dir)
+  --   new_config.cmd = {
+  --     "node",
+  --     path.join(new_root_dir, "node_modules", "@angular", "language-service", "bin", "ngserver"),
+  --     "--stdio",
+  --   }
+  -- end,
   capabilities = capabilities,
 }
 
