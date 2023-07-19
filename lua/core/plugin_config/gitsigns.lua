@@ -1,4 +1,71 @@
-require('gitsigns').setup{
+local gs = require('gitsigns')
+local files = {}
+local files_pos = 1
+local last_file_name = ''
+
+local function get_modified_files()
+    local handle, err = io.popen('git diff --name-only', 'r')
+
+    if not handle then
+        error("Failed to run command: " .. err)
+    end
+
+    local git_output = handle:read('*all')
+    handle:close()
+
+    -- print("Git output " .. git_output)
+    for file in git_output:gmatch('[^\n]+') do
+        table.insert(files, file)
+    end
+
+    -- for i, file in ipairs(files) do
+    --     print("file["..i.."] " .. file)
+    -- end
+
+end
+files = get_modified_files()
+
+local function try_closing_last_file()
+    if last_file_name ~= '' then
+        vim.cmd('bdelete ' .. last_file_name)
+        if files then
+            last_file_name = files[files_pos]
+        end
+    end
+end
+
+local function next_hunk_or_file()
+    vim.api.nvim_echo({{"Debug message", "ErrorMsg"}}, true, {})
+    local nh_success = gs.next_hunk()
+
+    print("files_pos " .. files_pos)
+    -- We have reached the last hunk of the current file, so we need to open the next modified file
+    if not nh_success then
+        print("nh_success false")
+        if files and files[files_pos + 1] then
+            files_pos = files_pos + 1
+            vim.cmd('edit ' .. files[files_pos])
+            try_closing_last_file()
+        end
+        -- After opening the next file, move to its first hunk
+        gs.next_hunk()
+    end
+
+end
+
+local function prev_hunk_or_file()
+    local ph_success = gs.prev_hunk()
+    if not ph_success then
+        if files and files[files_pos - 1] then
+            files_pos = files_pos - 1
+            vim.cmd('edit' .. files[files_pos - 1])
+            try_closing_last_file()
+        end
+        gs.prev_hunk()
+    end
+end
+
+gs.setup{
     signs = {
         add          = { text = '│' },
         change       = { text = '│' },
@@ -37,7 +104,7 @@ require('gitsigns').setup{
     },
     yadm = { enable = false },
     on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+        -- local gs = package.loaded.gitsigns
 
         local function map(mode, l, r, opts)
             opts = opts or {}
@@ -56,6 +123,18 @@ require('gitsigns').setup{
           vim.schedule(function() gs.prev_hunk() end)
           return '<Ignore>'
         end, {expr=true, desc="Go to previous change"})
+
+        map('n', '[x', function()
+          -- if vim.wo.diff then return '[x' end
+          vim.schedule(function() prev_hunk_or_file() end)
+          return '<Ignore>'
+        end, {expr=true, desc="Go to previous change regardless the file"})
+
+        map('n', ']x', function()
+          -- if vim.wo.diff then return '[x' end
+          vim.schedule(function() next_hunk_or_file() end)
+          return '<Ignore>'
+        end, {expr=true, desc="Go to next change regardless the file"})
 
 
         -- Navigation
