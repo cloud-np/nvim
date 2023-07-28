@@ -35,22 +35,25 @@ local function try_closing_last_file()
 end
 
 local function next_hunk_or_file()
-    vim.api.nvim_echo({{"Debug message", "ErrorMsg"}}, true, {})
-    local nh_success = gs.next_hunk()
-
-    print("files_pos " .. files_pos)
-    -- We have reached the last hunk of the current file, so we need to open the next modified file
-    if not nh_success then
-        print("nh_success false")
-        if files and files[files_pos + 1] then
-            files_pos = files_pos + 1
-            vim.cmd('edit ' .. files[files_pos])
-            try_closing_last_file()
-        end
-        -- After opening the next file, move to its first hunk
-        gs.next_hunk()
+    print("----- next_hunk_or_file called -----")
+    local hunks = gs.get_hunks()
+    print("--hunks--")
+    for _, h in ipairs(hunks) do
+        print("hunk: ", h)
     end
 
+    -- We have reached the last hunk of the current file, so we need to open the next modified file
+    print("files_pos: " .. files_pos)
+    if files and files[files_pos + 1] then
+        files_pos = files_pos + 1
+        vim.cmd('edit ' .. files[files_pos])
+        try_closing_last_file()
+    end
+    -- After opening the next file, move to its first hunk
+    gs.next_hunk()
+    print("Called gs.next_hunk() in line 54")
+
+    print("----- next_hunk_or_file end -----")
 end
 
 local function prev_hunk_or_file()
@@ -131,10 +134,11 @@ gs.setup{
         end, {expr=true, desc="Go to previous change regardless the file"})
 
         map('n', ']x', function()
-          -- if vim.wo.diff then return '[x' end
-          vim.schedule(function() next_hunk_or_file() end)
-          return '<Ignore>'
-        end, {expr=true, desc="Go to next change regardless the file"})
+            -- if vim.wo.diff then return '[x' end
+--            print("Hello")
+ --           vim.api.nvim_echo({{"Debug message", "ErrorMsg"}}, true, {})
+            vim.schedule(function() next_hunk_or_file() end)
+        end, {desc="Go to next change regardless the file"})
 
 
         -- Navigation
@@ -156,6 +160,6 @@ gs.setup{
         map('n', '<leader>gtd', gs.toggle_deleted, { desc="Toggle display of deleted lines" })
 
         -- Text object
-        map('v', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc="Select current hunk" })
+       map('v', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc="Select current hunk" })
     end
 }
