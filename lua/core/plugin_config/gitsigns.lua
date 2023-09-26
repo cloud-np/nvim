@@ -135,7 +135,7 @@ gs.setup{
 
         map('n', ']x', function()
             -- if vim.wo.diff then return '[x' end
---            print("Hello")
+            print("Hello")
  --           vim.api.nvim_echo({{"Debug message", "ErrorMsg"}}, true, {})
             vim.schedule(function() next_hunk_or_file() end)
         end, {desc="Go to next change regardless the file"})
@@ -160,6 +160,6 @@ gs.setup{
         map('n', '<leader>gtd', gs.toggle_deleted, { desc="Toggle display of deleted lines" })
 
         -- Text object
-       map('v', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc="Select current hunk" })
+      map('v', 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc="Select current hunk" })
     end
 }

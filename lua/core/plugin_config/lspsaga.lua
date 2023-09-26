@@ -88,3 +88,6 @@ keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 -- Floating terminal
 keymap({"n", "t"}, "<c-\\>", "<cmd>Lspsaga term_toggle<CR>")
+
+-- Format code
+keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', { desc = "Format Code", noremap = true, silent = true })

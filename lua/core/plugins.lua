@@ -40,6 +40,8 @@ local plugins = {
             -- refer to the configuration section below
         }
     },
+    -- For indent annoying lines
+    { "lukas-reineke/indent-blankline.nvim" },
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',

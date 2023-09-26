@@ -55,7 +55,15 @@ lspconfig.tsserver.setup {
   end,
   on_attach = function(client, bufnr)
     -- Optional: your additional configurations...
-  end
+        --
+    -- client.resolved_capabilities.document_formatting = true
+  end,
+  settings = {
+    documentFormatting = false,
+    documentFormattingParams = {
+      tabSize = 4,
+    }
+  }
 }
 
 lspconfig.angularls.setup {
