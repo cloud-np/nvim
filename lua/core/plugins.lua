@@ -41,11 +41,15 @@ local plugins = {
         }
     },
     -- For indent annoying lines
+    -- Migrating to from 2 to 3
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',
     'nvim-treesitter/nvim-treesitter',
+    -- Depedency for leap.nvim
+    'tpope/vim-repeat',
+    'ggandor/leap.nvim',
     -- Unfortunatly, this is not working
     -- 'nvim-treesitter/nvim-treesitter-angular',
     'princejoogie/tailwind-highlight.nvim',
@@ -58,8 +62,15 @@ local plugins = {
 
     'Yggdroot/indentLine',
 
-    -- rust babyyyyyyy
     'mfussenegger/nvim-dap',
+    -- {
+    --     'leoluz/nvim-dap-go',
+    --     ft = {'go'},
+    --     depedencies = 'mfussenegger/nvim-dap',
+    --     config = function(_, opts)
+    --         require('dap-go').setup(opts)
+    --     end
+    -- },
     'rcarriga/nvim-dap-ui',
     'simrat39/rust-tools.nvim',
 

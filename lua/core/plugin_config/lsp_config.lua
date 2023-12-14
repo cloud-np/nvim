@@ -24,6 +24,7 @@ vim.keymap.set({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent
 -- vim.cmd [[ autocmd BufWritePre *.ts,*.js lua vim.lsp.buf.formatting() ]]
 vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
 
+-- Lua
 lspconfig.lua_ls.setup {
   capabilities = capabilities,
   settings = {
@@ -41,11 +42,27 @@ lspconfig.lua_ls.setup {
   }
 }
 
+-- Python
 lspconfig.pyright.setup {
     capabilities = capabilities,
     filetypes = { "python" },
 }
 
+-- Go
+lspconfig.gopls.setup {
+    capabilities = capabilities,
+    cmd = {"gopls", "serve"},
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+        },
+    },
+}
+
+-- Javascript/Typescript
 lspconfig.tsserver.setup {
   capabilities = capabilities,
   cmd = {"typescript-language-server", "--stdio"},
@@ -56,7 +73,7 @@ lspconfig.tsserver.setup {
   on_attach = function(client, bufnr)
     -- Optional: your additional configurations...
         --
-    -- client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.document_formatting = true
   end,
   settings = {
     documentFormatting = false,
@@ -66,6 +83,7 @@ lspconfig.tsserver.setup {
   }
 }
 
+-- Angular
 lspconfig.angularls.setup {
   -- To verify that an Angular lsp is installed globally or locally.
   -- cmd = {"node", "/path/to/angular-language-service/packages/server/index.js", "--stdio"},
@@ -79,24 +97,25 @@ lspconfig.angularls.setup {
   capabilities = capabilities,
 }
 
-lspconfig.rust_analyzer.setup {
-    capabilities = capabilities,
-    -- on_attach = on_attach,
-    cmd = {
-        "rustup", "run", "stable", "rust-analyzer"
-    }
-    -- settings = {
-    --     ["rust-analyzer"] = {
-    --         assist = {
-    --             importGranularity = "module",
-    --             importPrefix = "by_self",
-    --         },
-    --         cargo = {
-    --             loadOutDirsFromCheck = true
-    --         },
-    --         procMacro = {
-    --             enable = true
-    --         },
-    --     }
-    -- }
-}
+-- Rust NOTE: Not used for now
+-- lspconfig.rust_analyzer.setup {
+--     capabilities = capabilities,
+--     -- on_attach = on_attach,
+--     cmd = {
+--         "rustup", "run", "stable", "rust-analyzer"
+--     }
+--     -- settings = {
+--     --     ["rust-analyzer"] = {
+--     --         assist = {
+--     --             importGranularity = "module",
+--     --             importPrefix = "by_self",
+--     --         },
+--     --         cargo = {
+--     --             loadOutDirsFromCheck = true
+--     --         },
+--     --         procMacro = {
+--     --             enable = true
+--     --         },
+--     --     }
+--     -- }
+-- }
