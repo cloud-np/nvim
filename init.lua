@@ -3,6 +3,3 @@ require("core.keymaps")
 require("core.plugins")
 require("core.autocommands")
 require("core.plugin_config")
-
-
-

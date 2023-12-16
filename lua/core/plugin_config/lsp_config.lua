@@ -97,6 +97,14 @@ lspconfig.angularls.setup {
   capabilities = capabilities,
 }
 
+-- Astro
+lspconfig.astro.setup {
+    autostart = true,
+}
+-- For syntax highlighting
+vim.g.astro_typescript = 'enable'
+vim.g.astro_stylus = 'enable'
+
 -- Rust NOTE: Not used for now
 -- lspconfig.rust_analyzer.setup {
 --     capabilities = capabilities,
