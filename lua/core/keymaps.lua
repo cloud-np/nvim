@@ -1,4 +1,3 @@
--- [[ Basic Keymaps ]]
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -32,13 +31,13 @@ vim.api.nvim_set_keymap('i', '<C-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { 
 vim.api.nvim_set_keymap('i', '<C-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { noremap = true, expr = true, silent = true })
 
 -- To resize buffers
--- NOTE: This needs to
--- Define the key mappings with descriptions
 vim.api.nvim_set_keymap('n', '<Leader>bh+', ':resize +5<CR>', { desc = "Increase Height", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>bh-', ':resize -5<CR>', { desc = "Decrease Height", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>bw+', ':vertical resize +5<CR>', { desc = "Increase Width", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>bw-', ':vertical resize -5<CR>', { desc = "Decrease Width", noremap = true, silent = true })
 
+-- NOTE:
+-- Define the key mappings with descriptions
 vim.api.nvim_set_keymap('n', '<C-S-j>', ':resize +10<CR>', {})
 vim.api.nvim_set_keymap('n', '<C-S-k>', ':resize -10<CR>', {})
 vim.api.nvim_set_keymap('n', '<C-S-h>', ':vertical resize -10<CR>', {})
