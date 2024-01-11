@@ -1,16 +1,59 @@
 -- [[ Configure Telescope ]]
+local actions = require('telescope.actions')
+
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-        ["<C-j>"] = require('telescope.actions').move_selection_next,
-        ["<C-k>"] = require('telescope.actions').move_selection_previous,
-      },
+    defaults = {
+        mappings = {
+            i = {
+                ['<C-u>'] = false,
+                ['<C-d>'] = false,
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-w>"] = actions.delete_buffer,
+            },
+        },
+        file_ignore_patterns = {
+            'node_modules',
+            '*.min.js',
+            '*.min.css',
+            '*.min.html',
+            -- 'vendor',
+            -- '*.min.json',
+            -- '*.min.py',
+            -- '*.min.ts',
+            -- '*.min.tsx',
+            -- '*.min.jsx',
+            -- '*.min.lua',
+            -- '*.min.sh',
+            -- '*.min.c',
+        },
+
+        -- vimgrep_arguments = {
+        --     'rg',
+        --     '--color=never',
+        --     '--no-heading',
+        --     '--with-filename',
+        --     '--line-number',
+        --     '--column',
+        --     '--smart-case',
+        --     '--hidden',
+        --     '--glob=!.git/',
+        --     '--glob=!node_modules/',
+        --     '--glob=!vendor/',
+        --     '--glob=!*.min.js',
+        --     '--glob=!*.min.css',
+        --     '--glob=!*.min.html',
+        --     -- '--glob=!*.min.json',
+        --     -- '--glob=!*.min.py',
+        --     -- '--glob=!*.min.ts',
+        --     -- '--glob=!*.min.tsx',
+        --     -- '--glob=!*.min.jsx',
+        --     -- '--glob=!*.min.lua',
+        --     -- '--glob=!*.min.sh',
+        --     -- '--glob=!*.min.c',
+        -- },
     },
-  },
 }
 
 -- Enable telescope fzf native, if installed
@@ -21,11 +64,11 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 -- Git related
@@ -49,3 +92,4 @@ vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iag
 -- vim.keymap.set('n', '<Space><Space>', builtin.oldfiles, {})
 -- vim.keymap.set('n', '<Space>fg', builtin.live_grep, {})
 -- vim.keymap.set('n', '<Space>fh', builtin.help_tags, {})
+--

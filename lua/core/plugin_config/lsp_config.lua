@@ -62,6 +62,13 @@ lspconfig.gopls.setup {
     },
 }
 
+lspconfig.sqlls.setup {
+    capabilities = capabilities,
+    cmd = { "sql-language-server", "up", "--method", "stdio" },
+    filetypes = { "sql" },
+    root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
+}
+
 -- Javascript/Typescript
 lspconfig.tsserver.setup {
     capabilities = capabilities,
