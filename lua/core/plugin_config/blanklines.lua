@@ -20,3 +20,5 @@ require("ibl").setup {
         show_end = true,
     },
 }
+
+-- vim.opt.listchars:remove("tab:>") -- Assuming "tab:>-"

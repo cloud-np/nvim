@@ -42,7 +42,8 @@ local plugins = {
     },
     -- For indent annoying lines
     -- Migrating to from 2 to 3
-    { "lukas-reineke/indent-blankline.nvim",      main = "ibl",  opts = {} },
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl",  opts = {} },
+    -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',
@@ -59,8 +60,6 @@ local plugins = {
     'christoomey/vim-tmux-navigator',
     'tpope/vim-fugitive',
     'tpope/vim-commentary',
-
-    'Yggdroot/indentLine',
 
     'mfussenegger/nvim-dap',
     -- {

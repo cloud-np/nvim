@@ -97,6 +97,7 @@ vim.o.expandtab = true
 
 -- Enable indentLine plugin
 vim.g.indentLine_enabled = 1
+-- vim.g.indentLine_char = '' -- This sets the indentLine character to an empty string
 
 -- Customize the appearance of the indentLine
 vim.g.indentLine_color_term = 239

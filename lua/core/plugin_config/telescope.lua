@@ -4,6 +4,7 @@ local actions = require('telescope.actions')
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
     defaults = {
+        path_display = { "truncate" },
         mappings = {
             i = {
                 ['<C-u>'] = false,
@@ -153,7 +154,7 @@ for _, config in ipairs(grep_configs) do
             additional_args = function()
                 return helpers.concatArrays(config.searchPattern, defaults)
             end,
-            prompt_title = config.prompt_title
+            prompt_title = config.prompt_title,
         })
     end, { desc = config.desc })
 end
