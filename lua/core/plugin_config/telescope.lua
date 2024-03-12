@@ -8,28 +8,11 @@ require('telescope').setup {
             i = {
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
-<<<<<<< Updated upstream
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
                 ["<C-w>"] = actions.delete_buffer,
             },
         },
-        file_ignore_patterns = {
-            'node_modules',
-            '*.min.js',
-            '*.min.css',
-            '*.min.html',
-            -- 'vendor',
-            -- '*.min.json',
-            -- '*.min.py',
-            -- '*.min.ts',
-            -- '*.min.tsx',
-            -- '*.min.jsx',
-            -- '*.min.lua',
-            -- '*.min.sh',
-            -- '*.min.c',
-        },
-
         -- vimgrep_arguments = {
         --     'rg',
         --     '--color=never',
@@ -54,13 +37,16 @@ require('telescope').setup {
         --     -- '--glob=!*.min.sh',
         --     -- '--glob=!*.min.c',
         -- },
-    },
-=======
-                ['<C-j>'] = require('telescope.actions').move_selection_next,
-                ['<C-k>'] = require('telescope.actions').move_selection_previous,
-            },
-        },
-        file_ignore_patterns = { "node_modules", ".git", ".vscode", "testing", "test" }
+        file_ignore_patterns = {
+            "node_modules",
+            ".git",
+            ".vscode",
+            "testing",
+            "test",
+            '*.min.js',
+            '*.min.css',
+            '*.min.html',
+        }
     },
     extensions = {
         fzf = {
@@ -71,7 +57,6 @@ require('telescope').setup {
             -- the default case_mode is "smart_case"
         }
     }
->>>>>>> Stashed changes
 }
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
@@ -148,13 +133,13 @@ local grep_configs = {
     },
     {
         hotkey = '<leader>sgs',
-        searchPattern = {'--glob', '*.spec.ts' },
+        searchPattern = { '--glob', '*.spec.ts' },
         desc = '[S]earch by [G]rep [S]pec.ts',
         prompt_title = 'Specs'
     },
     {
         hotkey = '<leader>sga',
-        searchPattern = {'--glob', '*.action.ts' },
+        searchPattern = { '--glob', '*.action.ts' },
         desc = '[S]earch by [G]rep [A]ction.ts',
         prompt_title = 'Actions'
     },
