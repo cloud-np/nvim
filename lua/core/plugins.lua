@@ -1,23 +1,21 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
+        'git',
+        'clone',
+        '--filter=blob:none',
+        'https://github.com/folke/lazy.nvim.git',
+        '--branch=stable', -- latest stable release
         lazypath,
     })
 end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    'wbthomason/packer.nvim',
-    'ellisonleao/gruvbox.nvim',
     {
         'catppuccin/nvim',
-        name = "catppuccin",
-        lazy = false
+        name = 'catppuccin',
+        lazy = true
     },
 
     {
@@ -28,8 +26,8 @@ local plugins = {
         end
     },
     {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
+        'folke/which-key.nvim',
+        event = 'VeryLazy',
         init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 300
@@ -42,26 +40,27 @@ local plugins = {
     },
     -- For indent annoying lines
     -- Migrating to from 2 to 3
-    { "lukas-reineke/indent-blankline.nvim", main = "ibl",  opts = {} },
+    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl',  opts = {} }, -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-    'nvim-tree/nvim-web-devicons',
-    'nvim-lualine/lualine.nvim',
-    'nvim-treesitter/nvim-treesitter',
-    -- Depedency for leap.nvim
-    'tpope/vim-repeat',
-    'ggandor/leap.nvim',
-    -- Unfortunatly, this is not working
-    -- 'nvim-treesitter/nvim-treesitter-angular',
-    'princejoogie/tailwind-highlight.nvim',
-    'vim-test/vim-test',
-    'lewis6991/gitsigns.nvim',
-    'preservim/vimux',
-    'christoomey/vim-tmux-navigator',
-    'tpope/vim-fugitive',
-    'tpope/vim-commentary',
 
-    'mfussenegger/nvim-dap',
+    { 'echasnovski/mini.nvim', version = '*' }, -- mini icons
+    'nvim-tree/nvim-web-devicons', -- Helps with nerdfonts in neovim?
+    'nvim-lualine/lualine.nvim', -- Status line at the bottom
+    'nvim-treesitter/nvim-treesitter',
+    'tpope/vim-repeat', -- Depedency for leap.nvim
+    -- 'ggandor/leap.nvim',
+    -- Unfortunatly, this is not working
+    'nvim-treesitter/nvim-treesitter-angular',
+    'princejoogie/tailwind-highlight.nvim',
+    'vim-test/vim-test', -- Running tests
+    'lewis6991/gitsigns.nvim', -- Git blame, diffs etc quite useful
+    -- 'preservim/vimux', -- Run tmux commands from vim, learn tmux first
+    -- 'christoomey/vim-tmux-navigator', -- Navigate tmux panes with vim, learn tmux first
+
+    -- 'tpope/vim-fugitive', -- Git commands in nvim
+    'tpope/vim-commentary', -- Comment stuff with gc and gcc
+
     -- {
     --     'leoluz/nvim-dap-go',
     --     ft = {'go'},
@@ -70,25 +69,37 @@ local plugins = {
     --         require('dap-go').setup(opts)
     --     end
     -- },
-    'rcarriga/nvim-dap-ui',
-    'simrat39/rust-tools.nvim',
+    -- 'mfussenegger/nvim-dap', -- Once you learn the rest then use it
+    -- 'rcarriga/nvim-dap-ui',
+    -- 'simrat39/rust-tools.nvim', -- Once you learn Rust then use it
 
     -- various tooling for langs
-    {
-        'jose-elias-alvarez/null-ls.nvim',
-        ft = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'lua', 'python', 'rust' },
-    },
+    -- No longer maintained swap soon.
+    -- { 'jose-elias-alvarez/null-ls.nvim',
+    --     ft = { 'javascript', 'typescript',
+    --         -- 'typescriptreact',
+    --         -- 'javascriptreact',
+    --         -- 'rust',
+    --         'lua', 'python',
+    --     },
+    -- },
+
     -- completion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
+    --
+
+    -- Snippets
     'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-    "rafamadriz/friendly-snippets",
-    "github/copilot.vim",
-    "williamboman/mason.nvim",
-    "neovim/nvim-lspconfig",
-    "williamboman/mason-lspconfig.nvim",
-    "glepnir/lspsaga.nvim",
+    'saadparwaiz1/cmp_luasnip', -- allows the above LuaSnip snippets in the completion of nvim-cmp
+    -- 'rafamadriz/friendly-snippets', -- To be used with LuaSnip needs some extra config
+    -- https://github.com/rafamadriz/friendly-snippets
+    --
+
+    'github/copilot.vim',
+    'williamboman/mason.nvim',
+    'neovim/nvim-lspconfig',
+    'williamboman/mason-lspconfig.nvim',
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.0',
@@ -100,4 +111,4 @@ local plugins = {
 
 local opts = {}
 
-require("lazy").setup(plugins, opts)
+require('lazy').setup(plugins, opts)

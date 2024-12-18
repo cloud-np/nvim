@@ -1,4 +1,4 @@
-require('leap').add_default_mappings()
+-- require('leap').add_default_mappings()
 -- vim.api.nvim_set_keymap('n', 'zs', 's', {noremap = true})
 -- vim.api.nvim_set_keymap('n', 'zS', 'S', {noremap = true})
 -- vim.api.nvim_set_keymap('n', '<Leader>', ':resize +5<CR>', { desc = "Increase Height", noremap = true, silent = true })
