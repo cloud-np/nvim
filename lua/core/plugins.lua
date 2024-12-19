@@ -52,8 +52,6 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     'tpope/vim-repeat', -- Depedency for leap.nvim
     -- 'ggandor/leap.nvim',
-    -- Unfortunatly, this is not working
-    'nvim-treesitter/nvim-treesitter-angular',
     'princejoogie/tailwind-highlight.nvim',
     'vim-test/vim-test', -- Running tests
     'lewis6991/gitsigns.nvim', -- Git blame, diffs etc quite useful

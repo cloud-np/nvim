@@ -79,11 +79,12 @@ lspconfig.ts_ls.setup {
         return lspconfig.util.root_pattern('package.json', 'tsconfig.json', '.git')(fname) or
         lspconfig.util.path.dirname(fname)
     end,
-    on_attach = function(client, bufnr)
-        -- Optional: your additional configurations...
-        --
-        client.resolved_capabilities.document_formatting = true
-    end,
+    -- Old config for tsserver not sure if applicable
+    -- on_attach = function(client, bufnr)
+    --     -- Optional: your additional configurations...
+    --     --
+    --     client.resolved_capabilities.document_formatting = true
+    -- end,
     settings = {
         documentFormatting = false,
         documentFormattingParams = {
