@@ -1,5 +1,7 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+-- TODO: Check why this says Undefined field for fs_stat
+-- https://neovim.io/doc/user/luvref.html#uv.fs_stat()
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         'git',
         'clone',
