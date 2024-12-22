@@ -21,4 +21,7 @@ require("ibl").setup {
     },
 }
 
--- vim.opt.listchars:remove("tab:>") -- Assuming "tab:>-"
+-- Needs to be in this order to override the defaults
+-- from the plugin above. This is to stop rendering Tabs as '>'
+vim.opt.list = false
+vim.o.list = false

@@ -94,6 +94,9 @@ lspconfig.ts_ls.setup {
 }
 
 -- Angular
+local util = require("lspconfig.util")
+local root_dir = util.root_pattern("nx.json", "angular.json", "project.json")
+
 lspconfig.angularls.setup {
     -- To verify that an Angular lsp is installed globally or locally.
     -- cmd = {"node", "/path/to/angular-language-service/packages/server/index.js", "--stdio"},
@@ -104,6 +107,7 @@ lspconfig.angularls.setup {
     --     "--stdio",
     --   }
     -- end,
+    root_dir = root_dir,
     capabilities = capabilities,
 }
 
