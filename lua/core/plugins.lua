@@ -14,38 +14,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        lazy = true
-    },
+    { 'catppuccin/nvim', name = 'catppuccin', lazy = true },
 
-    {
-        'glepnir/lspsaga.nvim',
-        event = 'LspAttach',
-        config = function()
-            require('lspsaga').setup({})
-        end
-    },
-    {
-        'folke/which-key.nvim',
-        event = 'VeryLazy',
-        init = function()
-            vim.o.timeout = true
-            vim.o.timeoutlen = 300
-        end,
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        }
-    },
+    { 'glepnir/lspsaga.nvim', event = 'LspAttach', config = function() require('lspsaga').setup({}) end },
+    { 'folke/which-key.nvim', event = 'VeryLazy', init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end, },
     -- For indent annoying lines
     -- Migrating to from 2 to 3
     { 'lukas-reineke/indent-blankline.nvim', main = 'ibl',  opts = {} }, -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-
     { 'echasnovski/mini.nvim', version = '*' }, -- mini icons
     'nvim-tree/nvim-web-devicons', -- Helps with nerdfonts in neovim?
     'nvim-lualine/lualine.nvim', -- Status line at the bottom
@@ -100,11 +77,7 @@ local plugins = {
     'williamboman/mason.nvim',
     'neovim/nvim-lspconfig',
     'williamboman/mason-lspconfig.nvim',
-    {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
-        dependencies = { { 'nvim-lua/plenary.nvim' } }
-    },
+    { 'nvim-telescope/telescope.nvim', tag = '0.1.0', dependencies = { { 'nvim-lua/plenary.nvim' } } },
     -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release ; cmake --build build --config Release ; cmake --install build --prefix build' }
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
 }

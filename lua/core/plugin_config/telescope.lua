@@ -1,11 +1,7 @@
 -- -- [[ Configure Telescope ]]
+local keymap = vim.keymap.set
 local actions = require('telescope.actions')
 
-require('telescope').setup {
-    defaults = {
-        debug = true,
-    }
-}
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
     defaults = {
@@ -90,18 +86,10 @@ local builtin = require('telescope.builtin')
 local helpers = require('helpers')
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = false,
-    })
-end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = 'Resume last telescope search' })
-
-vim.keymap.set('n', '<leader>fs', function()
+keymap('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+keymap('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+keymap('n', '<leader>fr', require('telescope.builtin').resume, { desc = 'Resume last telescope search' })
+keymap('n', '<leader>fs', function()
     builtin.live_grep({
         default_text = vim.fn.expand("<cword>"),
         initial_mode = "normal",
@@ -109,21 +97,28 @@ vim.keymap.set('n', '<leader>fs', function()
 end, { desc = 'Search word under cursor' })
 
 -- Git related
-vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = 'Search [G]it [C]ommits' })
-vim.keymap.set('n', '<leader>gbc', builtin.git_bcommits, { desc = 'Search [G]it [B]uffer [C]ommits' })
-vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Search [G]it [S]tatus' })
+keymap('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
+keymap('n', '<leader>gc', builtin.git_commits, { desc = 'Search [G]it [C]ommits' })
+keymap('n', '<leader>gbc', builtin.git_bcommits, { desc = 'Search [G]it [B]uffer [C]ommits' })
+keymap('n', '<leader>gs', builtin.git_status, { desc = 'Search [G]it [S]tatus' })
 
 
-vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
-vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+keymap('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+keymap('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+keymap('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+keymap('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+keymap('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
+keymap('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+keymap('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 
-vim.keymap.set('n', '<leader>sgg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+keymap('n', '<leader>/', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+keymap('n', '<leader>s/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
+end, { desc = '[Seacrh][/] Fuzzily search in current buffer' })
 local grep_configs = {
     {
         hotkey = '<leader>sgt',
@@ -178,7 +173,7 @@ local grep_configs = {
 local defaults = { '--glob', '!*svg.ts' }
 
 for _, config in ipairs(grep_configs) do
-    vim.keymap.set('n', config.hotkey, function()
+    keymap('n', config.hotkey, function()
         require('telescope.builtin').live_grep({
             additional_args = function()
                 return helpers.concatArrays(config.searchPattern, defaults)
@@ -189,8 +184,8 @@ for _, config in ipairs(grep_configs) do
 end
 -- require('telescope').setup()
 
--- vim.keymap.set('n', '<c-p>', builtin.find_files, {})
--- vim.keymap.set('n', '<Space><Space>', builtin.oldfiles, {})
--- vim.keymap.set('n', '<Space>fg', builtin.live_grep, {})
--- vim.keymap.set('n', '<Space>fh', builtin.help_tags, {})
+-- keymap('n', '<c-p>', builtin.find_files, {})
+-- keymap('n', '<Space><Space>', builtin.oldfiles, {})
+-- keymap('n', '<Space>fg', builtin.live_grep, {})
+-- keymap('n', '<Space>fh', builtin.help_tags, {})
 -- --

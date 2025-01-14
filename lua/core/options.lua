@@ -102,3 +102,10 @@ vim.g.indentLine_enabled = 1
 -- Customize the appearance of the indentLine
 vim.g.indentLine_color_term = 239
 vim.g.indentLine_color_gui = '#888888'
+-- While this is working its a bit off since mutliple machines are being used.
+-- This was done to solve prioritizing
+-- Set nushell as the shell
+-- vim.o.shell = "nu"
+-- -- You might also want to set shellcmdflag and shellredir
+-- vim.o.shellcmdflag = "-c"  -- This tells nu to accept commands
+-- vim.o.shellredir = ">%s 2>&1"  -- This handles command output redirection
