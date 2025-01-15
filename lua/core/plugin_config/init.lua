@@ -4,7 +4,9 @@ require("core.plugin_config.lualine")
 require("core.plugin_config.nvim-tree")
 require("core.plugin_config.treesitter")
 require("core.plugin_config.telescope")
-require("core.plugin_config.vim-test")
+-- I have a telescope ignore pattern ignoreing, "test", "testing" files.
+-- May remove or tinker we will see.
+require("core.plugin_config.vimt")
 require("core.plugin_config.completions")
 require("core.plugin_config.lsp_config")
 require("core.plugin_config.gitsigns")

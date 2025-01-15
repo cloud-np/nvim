@@ -14,23 +14,43 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { 'catppuccin/nvim', name = 'catppuccin', lazy = true },
+    { 'catppuccin/nvim',      name = 'catppuccin', lazy = true },
 
-    { 'glepnir/lspsaga.nvim', event = 'LspAttach', config = function() require('lspsaga').setup({}) end },
-    { 'folke/which-key.nvim', event = 'VeryLazy', init = function() vim.o.timeout = true vim.o.timeoutlen = 300 end, },
+    { 'glepnir/lspsaga.nvim', event = 'LspAttach' },
+    {
+        'folke/which-key.nvim',
+        event = 'VeryLazy',
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+    },
     -- For indent annoying lines
     -- Migrating to from 2 to 3
-    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl',  opts = {} }, -- Better UI indentantion in files
+    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },        -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-    { 'echasnovski/mini.nvim', version = '*' }, -- mini icons
-    'nvim-tree/nvim-web-devicons', -- Helps with nerdfonts in neovim?
-    'nvim-lualine/lualine.nvim', -- Status line at the bottom
+    { 'echasnovski/mini.nvim',               version = '*' },      -- mini icons
+    'nvim-tree/nvim-web-devicons',                                 -- Helps with nerdfonts in neovim?
+    'nvim-lualine/lualine.nvim',                                   -- Status line at the bottom
     'nvim-treesitter/nvim-treesitter',
-    'tpope/vim-repeat', -- Depedency for leap.nvim
+    'tpope/vim-repeat',                                            -- Depedency for leap.nvim
     -- 'ggandor/leap.nvim',
     'princejoogie/tailwind-highlight.nvim',
-    'vim-test/vim-test', -- Running tests
+    {
+        {
+            "voldikss/vim-floaterm", -- Floating terminal helps testing
+            config = function()
+                vim.g.floaterm_autoinsert = false
+                vim.g.floaterm_autoclose = 0
+                vim.g.floaterm_opener = 'vsplit'
+            end
+        },
+        "vim-test/vim-test", -- Running tests
+        dependencies = {
+            "voldikss/vim-floaterm"
+        }
+    },
     'lewis6991/gitsigns.nvim', -- Git blame, diffs etc quite useful
     -- 'preservim/vimux', -- Run tmux commands from vim, learn tmux first
     -- 'christoomey/vim-tmux-navigator', -- Navigate tmux panes with vim, learn tmux first
@@ -77,7 +97,7 @@ local plugins = {
     'williamboman/mason.nvim',
     'neovim/nvim-lspconfig',
     'williamboman/mason-lspconfig.nvim',
-    { 'nvim-telescope/telescope.nvim', tag = '0.1.0', dependencies = { { 'nvim-lua/plenary.nvim' } } },
+    { 'nvim-telescope/telescope.nvim',            tag = '0.1.0', dependencies = { { 'nvim-lua/plenary.nvim' } } },
     -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release ; cmake --build build --config Release ; cmake --install build --prefix build' }
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
 }

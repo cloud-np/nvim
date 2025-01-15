@@ -1,4 +1,3 @@
--- -- [[ Configure Telescope ]]
 local keymap = vim.keymap.set
 local actions = require('telescope.actions')
 
@@ -6,6 +5,7 @@ local actions = require('telescope.actions')
 require('telescope').setup {
     defaults = {
         path_display = { 'truncate' },
+        matching_strategy = "exact",
         mappings = {
             i = {
                 ['<C-u>'] = false,
@@ -20,16 +20,6 @@ require('telescope').setup {
         cache_picker = {
             num_pickers = 10,
             limit_entries = 1000,
-        },
-        pickers = {
-            find_files = {
-                theme = 'dropdown',
-                previewer = true,
-            },
-            live_grep = {
-                theme = 'dropdown',
-                previewer = false,
-            },
         },
         -- vimgrep_arguments = {
         --     'rg',
@@ -66,6 +56,16 @@ require('telescope').setup {
             '*.min.html',
         }
     },
+    pickers = {
+        find_files = {
+            theme = 'dropdown',
+            previewer = true,
+        },
+        live_grep = {
+            theme = 'dropdown',
+            previewer = false,
+        },
+    },
     extensions = {
         fzf = {
             fuzzy = true,
@@ -80,15 +80,13 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
 local builtin = require('telescope.builtin')
 local helpers = require('helpers')
 
 -- See `:help telescope.builtin`
 keymap('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-keymap('n', '<leader>fr', require('telescope.builtin').resume, { desc = 'Resume last telescope search' })
+keymap('n', '<leader>fr', builtin.resume, { desc = 'Resume last telescope search' })
 keymap('n', '<leader>fs', function()
     builtin.live_grep({
         default_text = vim.fn.expand("<cword>"),
@@ -119,6 +117,7 @@ keymap('n', '<leader>s/', function()
         previewer = false,
     })
 end, { desc = '[Seacrh][/] Fuzzily search in current buffer' })
+
 local grep_configs = {
     {
         hotkey = '<leader>sgt',
@@ -174,7 +173,7 @@ local defaults = { '--glob', '!*svg.ts' }
 
 for _, config in ipairs(grep_configs) do
     keymap('n', config.hotkey, function()
-        require('telescope.builtin').live_grep({
+        builtin.live_grep({
             additional_args = function()
                 return helpers.concatArrays(config.searchPattern, defaults)
             end,
