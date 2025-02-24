@@ -61,6 +61,7 @@ lspconfig.gopls.setup {
     },
 }
 
+-- SQL
 lspconfig.sqlls.setup {
     capabilities = capabilities,
     cmd = { "sql-language-server", "up", "--method", "stdio" },
@@ -125,6 +126,25 @@ vim.filetype.add({
     filename = {},
     pattern = {},
 })
+
+-- Deno
+lspconfig.denols.setup {
+    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+}
+
+vim.g.markdown_fenced_languages = { "ts=typescript" }
+
+lspconfig.ts_ls.setup {
+    root_dir = lspconfig.util.root_pattern("package.json"),
+    single_file_support = false
+}
+
+lspconfig.zls.setup {
+    -- Could be omitted check later
+    cmd = { "zls" },
+    -- Not sure if this is valid
+    -- root_dir = lspconfig.util.root_pattern("zls.toml"),
+}
 
 -- LSP finder - Find the symbol's definition
 -- If there is no definition, it will instead be hidden
@@ -209,11 +229,12 @@ keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 
 -- Call hierarchy
-keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", { desc = "[C]alls [I]ncoming hierarchy" })
+keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", { desc = "[C]alls [O]utgoing hierarchy" })
 
 -- Floating terminal
-keymap({ "n", "t" }, "<c-\\>", "<cmd>Lspsaga term_toggle<CR>")
+keymap({ "n", "t" }, "<c-\\>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Floating terminal" })
 
 -- Format code
 keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', { desc = "Format Code", noremap = true, silent = true })
+keymap('n', '<leader>ls', '<cmd>Lspsaga finder<CR>', { desc = "[L]sp [S]earch", noremap = true })

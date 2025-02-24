@@ -27,14 +27,14 @@ local plugins = {
     },
     -- For indent annoying lines
     -- Migrating to from 2 to 3
-    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },        -- Better UI indentantion in files
+    { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} }, -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-    { 'echasnovski/mini.nvim',               version = '*' },      -- mini icons
-    'nvim-tree/nvim-web-devicons',                                 -- Helps with nerdfonts in neovim?
-    'nvim-lualine/lualine.nvim',                                   -- Status line at the bottom
+    { 'echasnovski/mini.nvim',               version = '*' }, -- mini icons
+    'nvim-tree/nvim-web-devicons',                            -- Helps with nerdfonts in neovim?
+    'nvim-lualine/lualine.nvim',                              -- Status line at the bottom
     'nvim-treesitter/nvim-treesitter',
-    'tpope/vim-repeat',                                            -- Depedency for leap.nvim
+    'tpope/vim-repeat',                                       -- Depedency for leap.nvim
     -- 'ggandor/leap.nvim',
     'princejoogie/tailwind-highlight.nvim',
     {
@@ -68,8 +68,11 @@ local plugins = {
     -- },
     -- 'mfussenegger/nvim-dap', -- Once you learn the rest then use it
     -- 'rcarriga/nvim-dap-ui',
-    -- 'simrat39/rust-tools.nvim', -- Once you learn Rust then use it
-
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^5', -- Recommended
+        lazy = false, -- This plugin is already lazy
+    },
     -- various tooling for langs
     -- No longer maintained swap soon.
     -- { 'jose-elias-alvarez/null-ls.nvim',
