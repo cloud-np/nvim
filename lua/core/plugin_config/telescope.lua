@@ -1,11 +1,33 @@
 local keymap = vim.keymap.set
 local actions = require('telescope.actions')
+local pickers = require('core.plugin_config.pickers')
 
+local oldfiles = function (options)
+    pickers.prettyFilesPicker({ picker = 'oldfiles', options = options })
+end
+local git_files = function (options)
+    pickers.prettyFilesPicker({ picker = 'git_files', options = options })
+end
+local live_grep = function (options)
+    pickers.prettyGrepPicker({ picker = 'live_grep', options = options })
+end
+local grep_string = function (options)
+    pickers.prettyGrepPicker({ picker = 'grep_string', options = options })
+end
+local find_files = function (options)
+    pickers.prettyFilesPicker({ picker = 'find_files', options = options })
+end
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
     defaults = {
-        path_display = { 'truncate' },
+        -- Usefull if pretty pickers have issues
+        -- Format path as "file.txt (path\to\file\)"
+        path_display = function(_, path)
+          local tail = require("telescope.utils").path_tail(path)
+          return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
+        end,
         matching_strategy = "exact",
+        preview_width = 0.4,
         mappings = {
             i = {
                 ['<C-u>'] = false,
@@ -62,8 +84,12 @@ require('telescope').setup {
             previewer = true,
         },
         live_grep = {
-            theme = 'dropdown',
-            previewer = false,
+            preview = {
+                title = true
+            },
+            layout_config = {
+                preview_width = 0.5,
+            },
         },
     },
     extensions = {
@@ -84,18 +110,18 @@ local builtin = require('telescope.builtin')
 local helpers = require('helpers')
 
 -- See `:help telescope.builtin`
-keymap('n', '<leader>?', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+keymap('n', '<leader>?', oldfiles, { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 keymap('n', '<leader>fr', builtin.resume, { desc = 'Resume last telescope search' })
 keymap('n', '<leader>fs', function()
-    builtin.live_grep({
+    live_grep({
         default_text = vim.fn.expand("<cword>"),
         initial_mode = "normal",
     })
 end, { desc = 'Search word under cursor' })
 
 -- Git related
-keymap('n', '<leader>gf', builtin.git_files, { desc = 'Search [G]it [F]iles' })
+keymap('n', '<leader>gf', git_files, { desc = 'Search [G]it [F]iles' })
 keymap('n', '<leader>gc', builtin.git_commits, { desc = 'Search [G]it [C]ommits' })
 keymap('n', '<leader>gbc', builtin.git_bcommits, { desc = 'Search [G]it [B]uffer [C]ommits' })
 keymap('n', '<leader>gs', builtin.git_status, { desc = 'Search [G]it [S]tatus' })
@@ -103,13 +129,12 @@ keymap('n', '<leader>gs', builtin.git_status, { desc = 'Search [G]it [S]tatus' }
 
 keymap('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
 keymap('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-keymap('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+keymap('n', '<leader>sf', find_files, { desc = '[S]earch [F]iles' })
 keymap('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 keymap('n', '<leader>st', builtin.treesitter, { desc = '[S]earch [T]reesitter' })
-keymap('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+keymap('n', '<leader>sw', grep_string, { desc = '[S]earch current [W]ord' })
 keymap('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-
-keymap('n', '<leader>/', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+keymap('n', '<leader>/', live_grep, { desc = '[S]earch by [G]rep' })
 keymap('n', '<leader>s/', function()
     -- You can pass additional configuration to telescope to change theme, layout, etc.
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -173,7 +198,7 @@ local defaults = { '--glob', '!*svg.ts' }
 
 for _, config in ipairs(grep_configs) do
     keymap('n', config.hotkey, function()
-        builtin.live_grep({
+        live_grep({
             additional_args = function()
                 return helpers.concatArrays(config.searchPattern, defaults)
             end,
