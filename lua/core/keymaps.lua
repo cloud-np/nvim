@@ -56,3 +56,15 @@ keymap('n', '<a-k>', ':resize -3<CR>', { silent = true })
 keymap('n', '<a-j>', ':resize +3<CR>', { silent = true })
 keymap('n', '<a-h>', ':vertical resize -3<CR>', { silent = true })
 keymap('n', '<a-l>', ':vertical resize +3<CR>', { silent = true })
+
+-- Copy to clipboard
+keymap('v', '<leader>y', '"+y', { desc = 'Copy selection to clipboard' })
+keymap('n', '<leader>Y', '"+yg_', { desc = 'Copy from cursor to end of line to clipboard' })
+keymap('n', '<leader>y', '"+y', { desc = 'Copy to clipboard (normal mode)' })
+keymap('n', '<leader>yy', '"+yy', { desc = 'Copy line to clipboard' })
+
+-- Paste from clipboard
+keymap('n', '<leader>p', '"+p', { desc = 'Paste from clipboard after cursor' })
+keymap('n', '<leader>P', '"+P', { desc = 'Paste from clipboard before cursor' })
+keymap('v', '<leader>p', '"+p', { desc = 'Paste from clipboard after selection' })
+keymap('v', '<leader>P', '"+P', { desc = 'Paste from clipboard before selection' })

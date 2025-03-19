@@ -112,11 +112,18 @@ lspconfig.angularls.setup {
 
 -- Astro
 lspconfig.astro.setup {
-    autostart = true,
+    -- autostart = true,
+    -- capabilities = capabilities,
+    -- filetypes = { "astro" },
+    -- This is kinda of working but its weird
+    -- init_options = {
+    --     typescript = {
+    --         tsdk = vim.fn.expand("~/my-repos/blog-site/node_modules/typescript/lib")
+    --         -- Adjust the path above to point to your project's TypeScript installation
+    --     }
+    -- }
 }
--- for syntax highlighting
-vim.g.astro_typescript = 'enable'
-vim.g.astro_stylus = 'enable'
+
 -- for mdx support
 vim.filetype.add({
     extension = {

@@ -37,7 +37,6 @@ local plugins = {
 
     -- 'tpope/vim-fugitive', -- Git commands in nvim
     'tpope/vim-commentary', -- Comment stuff with gc and gcc
-
     -- {
     --     'leoluz/nvim-dap-go',
     --     ft = {'go'},
