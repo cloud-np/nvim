@@ -68,11 +68,9 @@ local plugins = {
     -- },
     -- 'mfussenegger/nvim-dap', -- Once you learn the rest then use it
     -- 'rcarriga/nvim-dap-ui',
-    {
-        'mrcjkb/rustaceanvim',
-        version = '^5', -- Recommended
-        lazy = false, -- This plugin is already lazy
-    },
+    -- This includes rust_analyzer already but needs specific config
+    -- https://github.com/mrcjkb/rustaceanvim
+    -- { 'mrcjkb/rustaceanvim', version = '^5', -- Recommended },
     -- various tooling for langs
     -- No longer maintained swap soon.
     -- { 'jose-elias-alvarez/null-ls.nvim',

@@ -61,6 +61,25 @@ lspconfig.gopls.setup {
     },
 }
 
+-- Define the function with a different name to avoid conflicts
+local function get_utf16_capabilities()
+    local caps = vim.lsp.protocol.make_client_capabilities()
+    caps = vim.tbl_deep_extend('force', caps, {
+        offsetEncoding = { 'utf-16' },
+        general = {
+            positionEncodings = { 'utf-16' },
+        },
+    })
+
+    return caps
+end
+
+-- Then use the function in your setup
+lspconfig.rust_analyzer.setup({
+    capabilities = get_utf16_capabilities(),
+    offset_encoding = "utf-16",
+})
+
 -- SQL
 lspconfig.sqlls.setup {
     capabilities = capabilities,
@@ -150,7 +169,8 @@ lspconfig.zls.setup {
 -- If there is no definition, it will instead be hidden
 -- When you use an action in finder like "open vsplit",
 -- you can use <C-t> to jump back
-keymap("n", "gh", "<cmd>Lspsaga finder<CR>")
+-- keymap("n", "gh", "<cmd>Lspsaga finder<CR>")
+keymap("n", "<C-]>", "<cmd>Lspsaga finder<CR>")
 
 -- Code action
 keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
