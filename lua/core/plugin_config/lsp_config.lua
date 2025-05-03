@@ -14,6 +14,11 @@ lspsaga.setup({
         show_file = true,
         file_formatter = ""
     },
+    finder = {
+        keys = {
+            toggle_or_open = "<CR>",
+        }
+    }
 })
 
 keymap('n', 'K', '<Cmd>Lspsaga hover_doc<cr>', { silent = true })
@@ -74,11 +79,18 @@ local function get_utf16_capabilities()
     return caps
 end
 
--- Then use the function in your setup
+-- Rust
 lspconfig.rust_analyzer.setup({
     capabilities = get_utf16_capabilities(),
     offset_encoding = "utf-16",
 })
+
+lspconfig.clangd.setup {
+    capabilities = capabilities,
+    -- cmd = { "clangd", "--background-index" },
+    -- filetypes = { "c", "cpp", "cc", "cxx", "h", "hpp", "hxx" },
+    -- root_dir = lspconfig.util.root_pattern("compile_commands.json", ".clangd", ".git"),
+}
 
 -- SQL
 lspconfig.sqlls.setup {
@@ -165,12 +177,6 @@ lspconfig.zls.setup {
     -- root_dir = lspconfig.util.root_pattern("zls.toml"),
 }
 
--- LSP finder - Find the symbol's definition
--- If there is no definition, it will instead be hidden
--- When you use an action in finder like "open vsplit",
--- you can use <C-t> to jump back
-keymap("n", "<C-]>", "<cmd>Lspsaga finder<CR>")
-
 -- [L]sp [A]ction
 keymap({ "n", "v" }, "<leader>la", "<cmd>Lspsaga code_action<CR>", { desc = "[L]sp [A]ction" })
 
@@ -187,6 +193,12 @@ keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 -- Use <C-t> to jump back
 keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")
 
+-- LSP finder - Find the symbol's definition
+-- If there is no definition, it will instead be hidden
+-- When you use an action in finder like "open vsplit",
+-- you can use <C-t> to jump back
+keymap("n", "<C-]>", "<cmd>Lspsaga goto_definition<CR>")
+keymap("n", "gr", "<cmd>Lspsaga finder<CR>", { desc = "[G]et lsp [R]eferences" })
 -- Go to definition
 keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 
