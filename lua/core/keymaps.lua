@@ -7,9 +7,6 @@ keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-keymap('n', '<C-l>', ':bnext<CR>', { noremap = true, silent = true })
-keymap('n', '<C-h>', ':bprev<CR>', { noremap = true, silent = true })
-
 -- Diagnostic keymaps
 keymap('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = 'Go to next diagnostic message' })
 keymap('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = 'Go to previous diagnostic message' })
@@ -18,10 +15,14 @@ keymap('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diag
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Navigate vim panes better
-keymap('n', '<c-k>', ':wincmd k<CR>')
-keymap('n', '<c-j>', ':wincmd j<CR>')
-keymap('n', '<c-h>', ':wincmd h<CR>')
-keymap('n', '<c-l>', ':wincmd l<CR>')
+keymap('n', '<a-k>', ':wincmd k<CR>')
+keymap('n', '<a-j>', ':wincmd j<CR>')
+keymap('n', '<a-h>', ':wincmd h<CR>')
+keymap('n', '<a-l>', ':wincmd l<CR>')
+
+-- TODO: Assign these
+-- keymap('n', '', ':bnext<CR>', { noremap = true, silent = true })
+-- keymap('n', '', ':bprev<CR>', { noremap = true, silent = true })
 
 -- Close current buffer
 keymap('n', '<leader>bd', ':bd<CR>', { desc = "Close Buffer", silent = true, noremap = true })
@@ -52,7 +53,19 @@ keymap('n', '<leader>bt', function()
 end, { desc = "[T]oggle buffer size", silent = true })
 
 -- Buffer resizing
-keymap('n', '<a-k>', ':resize -3<CR>', { silent = true })
-keymap('n', '<a-j>', ':resize +3<CR>', { silent = true })
-keymap('n', '<a-h>', ':vertical resize -3<CR>', { silent = true })
-keymap('n', '<a-l>', ':vertical resize +3<CR>', { silent = true })
+keymap('n', '<c-Up>', ':resize -3<CR>', { silent = true })
+keymap('n', '<c-Down>', ':resize +3<CR>', { silent = true })
+keymap('n', '<c-Left>', ':vertical resize -3<CR>', { silent = true })
+keymap('n', '<c-Right>', ':vertical resize +3<CR>', { silent = true })
+
+-- Copy to clipboard
+keymap('v', '<leader>y', '"+y', { desc = 'Copy selection to clipboard' })
+keymap('n', '<leader>Y', '"+yg_', { desc = 'Copy from cursor to end of line to clipboard' })
+keymap('n', '<leader>y', '"+y', { desc = 'Copy to clipboard (normal mode)' })
+keymap('n', '<leader>yy', '"+yy', { desc = 'Copy line to clipboard' })
+
+-- Paste from clipboard
+keymap('n', '<leader>p', '"+p', { desc = 'Paste from clipboard after cursor' })
+keymap('n', '<leader>P', '"+P', { desc = 'Paste from clipboard before cursor' })
+keymap('v', '<leader>p', '"+p', { desc = 'Paste from clipboard after selection' })
+keymap('v', '<leader>P', '"+P', { desc = 'Paste from clipboard before selection' })

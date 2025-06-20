@@ -85,7 +85,11 @@ local plugins = {
     -- completion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
-    --
+    {
+        'akinsho/bufferline.nvim',
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+    },
 
     -- Snippets
     'L3MON4D3/LuaSnip',
