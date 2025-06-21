@@ -1,4 +1,3 @@
-vim.o.termguicolors = true
 vim.cmd [[ colorscheme catppuccin ]]
 
 local red = '#d20f39'

@@ -36,7 +36,14 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     'tpope/vim-repeat',                                       -- Depedency for leap.nvim
     -- 'ggandor/leap.nvim',
-    'princejoogie/tailwind-highlight.nvim',
+    {
+        "luckasRanarison/tailwind-tools.nvim",
+        name = "tailwind-tools",
+        build = ":UpdateRemotePlugins",
+        opts = {
+            document_color = { kind = "background" }
+        }
+    },
     {
         {
             "voldikss/vim-floaterm", -- Floating terminal helps testing
@@ -82,22 +89,41 @@ local plugins = {
     --     },
     -- },
 
-    -- completion
+    -- Auto completion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
+    -- Snippets
+    "rafamadriz/friendly-snippets",
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip', -- allows the above LuaSnip snippets in the completion of nvim-cmp
     {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
     },
-
-    -- Snippets
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip', -- allows the above LuaSnip snippets in the completion of nvim-cmp
     -- 'rafamadriz/friendly-snippets', -- To be used with LuaSnip needs some extra config
     -- https://github.com/rafamadriz/friendly-snippets
     --
-
+    {
+        "brenoprata10/nvim-highlight-colors",
+        config = function()
+            require('nvim-highlight-colors').setup({
+                -- Render style
+                render = 'background', -- or 'foreground' or 'virtual'
+                -- Set virtual symbol (used when render is virtual)
+                virtual_symbol = '■',
+                -- Highlight named colors
+                enable_named_colors = true,
+                enable_tailwind = false, -- Handled by tailwind.tools
+                exclude_filetypes = {},
+                exclude_buftypes = {}
+            })
+        end,
+    },
     'github/copilot.vim',
     'williamboman/mason.nvim',
     'neovim/nvim-lspconfig',

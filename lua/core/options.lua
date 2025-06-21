@@ -1,34 +1,34 @@
-vim.opt.backup = false -- creates a backup file
-vim.opt.clipboard = 'unnamedplus' -- allows neovim to access the system clipboard
-vim.opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
+vim.opt.backup = false                          -- creates a backup file
+vim.opt.clipboard = 'unnamedplus'               -- allows neovim to access the system clipboard
+vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
 vim.opt.completeopt = { 'menuone', 'noselect' } -- mostly just for cmp
-vim.opt.conceallevel = 0 -- so that `` is visible in markdown files
-vim.opt.fileencoding = 'utf-8' -- the encoding written to a file
-vim.opt.hlsearch = true -- highlight all matches on previous search pattern
-vim.opt.ignorecase = true -- ignore case in search patterns
-vim.opt.mouse = 'a' -- allow the mouse to be used in neovim
-vim.opt.pumheight = 10 -- pop up menu height
+vim.opt.conceallevel = 0                        -- so that `` is visible in markdown files
+vim.opt.fileencoding = 'utf-8'                  -- the encoding written to a file
+vim.opt.hlsearch = true                         -- highlight all matches on previous search pattern
+vim.opt.ignorecase = true                       -- ignore case in search patterns
+vim.opt.mouse = 'a'                             -- allow the mouse to be used in neovim
+vim.opt.pumheight = 10                          -- pop up menu height
 -- vim.opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-vim.opt.smartcase = true -- smart case
-vim.opt.smartindent = true -- make indenting smarter again
-vim.opt.splitbelow = true -- force all horizontal splits to go below current window
-vim.opt.splitright = true -- force all vertical splits to go to the right of current window
-vim.opt.swapfile = false -- creates a swapfile
-vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
-vim.opt.timeoutlen = 100 -- time to wait for a mapped sequence to complete (in milliseconds)
-vim.opt.undofile = true -- enable persistent undo
-vim.opt.updatetime = 300 -- faster completion (4000ms default)
-vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-vim.opt.cursorline = true -- highlight the current line
-vim.opt.number = true -- set numbered lines
-vim.opt.relativenumber = true -- set relative numbered lines
-vim.opt.numberwidth = 4 -- set number column width to 2 {default 4}
-vim.opt.signcolumn = 'yes' -- always show the sign column, otherwise it would shift the text each time
-vim.opt.wrap = false -- display lines as one long line
-vim.opt.scrolloff = 8 -- number of screen lines to keep cursor x lines from the edges (top & bottom of screen)
-vim.opt.sidescrolloff = 8 -- same as scrolloff but vertical
+vim.opt.smartcase = true                        -- smart case
+vim.opt.smartindent = true                      -- make indenting smarter again
+vim.opt.splitbelow = true                       -- force all horizontal splits to go below current window
+vim.opt.splitright = true                       -- force all vertical splits to go to the right of current window
+vim.opt.swapfile = false                        -- creates a swapfile
+vim.opt.termguicolors = true                    -- set term gui colors (most terminals support this)
+vim.opt.timeoutlen = 100                        -- time to wait for a mapped sequence to complete (in milliseconds)
+vim.opt.undofile = true                         -- enable persistent undo
+vim.opt.updatetime = 300                        -- faster completion (4000ms default)
+vim.opt.writebackup = false                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+vim.opt.cursorline = true                       -- highlight the current line
+vim.opt.number = true                           -- set numbered lines
+vim.opt.relativenumber = true                   -- set relative numbered lines
+vim.opt.numberwidth = 4                         -- set number column width to 2 {default 4}
+vim.opt.signcolumn = 'yes'                      -- always show the sign column, otherwise it would shift the text each time
+vim.opt.wrap = false                            -- display lines as one long line
+vim.opt.scrolloff = 8                           -- number of screen lines to keep cursor x lines from the edges (top & bottom of screen)
+vim.opt.sidescrolloff = 8                       -- same as scrolloff but vertical
 vim.opt.langmap =
-    'ΑAΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz,'
+'ΑAΒB,ΨC,ΔD,ΕE,ΦF,ΓG,ΗH,ΙI,ΞJ,ΚK,ΛL,ΜM,ΝN,ΟO,ΠP,QQ,ΡR,ΣS,ΤT,ΘU,ΩV,WW,ΧX,ΥY,ΖZ,αa,βb,ψc,δd,εe,φf,γg,ηh,ιi,ξj,κk,λl,μm,νn,οo,πp,qq,ρr,σs,τt,θu,ωv,ςw,χx,υy,ζz,'
 vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 
 -- Tabs
@@ -109,3 +109,36 @@ vim.g.indentLine_color_gui = '#888888'
 -- -- You might also want to set shellcmdflag and shellredir
 -- vim.o.shellcmdflag = "-c"  -- This tells nu to accept commands
 -- vim.o.shellredir = ">%s 2>&1"  -- This handles command output redirection
+-- neovide.lua or in your init.lua
+if vim.g.neovide then
+    -- Font settings
+    vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h12" -- Adjust size as needed
+
+    -- Line spacing (this is key for WebStorm feel)
+    vim.g.neovide_line_space = 4 -- Try values 2-6
+
+    -- Padding around the editor
+    vim.g.neovide_padding_top = 10
+    vim.g.neovide_padding_bottom = 10
+    vim.g.neovide_padding_right = 15
+    vim.g.neovide_padding_left = 15
+
+    -- Cursor animations (WebStorm-like smooth cursor)
+    vim.g.neovide_cursor_animation_length = 0.1
+    vim.g.neovide_cursor_trail_size = 0.3
+    vim.g.neovide_cursor_antialiasing = true
+    vim.g.neovide_cursor_animate_in_insert_mode = true
+    vim.g.neovide_cursor_animate_command_line = true
+
+    -- Scroll animation
+    vim.g.neovide_scroll_animation_length = 0.2
+
+    -- Remember window size
+    vim.g.neovide_remember_window_size = true
+
+    -- Refresh rate
+    vim.g.neovide_refresh_rate = 60
+
+    -- Fullscreen
+    vim.g.neovide_fullscreen = false
+end

@@ -132,6 +132,7 @@ lspconfig.angularls.setup {
 
 -- Astro
 lspconfig.astro.setup {
+    capabilities = capabilities,
     autostart = true,
 }
 -- for syntax highlighting
@@ -148,17 +149,40 @@ vim.filetype.add({
 
 -- Deno
 lspconfig.denols.setup {
+    capabilities = capabilities,
     root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 }
 
 vim.g.markdown_fenced_languages = { "ts=typescript" }
 
 lspconfig.ts_ls.setup {
+    capabilities = capabilities,
     root_dir = lspconfig.util.root_pattern("package.json"),
     single_file_support = false
 }
+-- Tailwind
+lspconfig.tailwindcss.setup({
+    capabilities = capabilities,
+    filetypes = {
+        'html', 'css', 'scss', 'javascript', 'javascriptreact',
+        'typescript', 'typescriptreact', 'svelte',
+    },
+    settings = {
+        tailwindCSS = {
+            experimental = {
+                classRegex = {
+                    "class[:]\\s*['\"]([^'\"]*)['\"]",
+                    "className[:]\\s*['\"]([^'\"]*)['\"]",
+                    "class[:]\\s*[`]([^`]*)[`]",
+                    "className[:]\\s*[`]([^`]*)[`]",
+                }
+            }
+        }
+    }
+})
 
 lspconfig.zls.setup {
+    capabilities = capabilities,
     -- Could be omitted check later
     cmd = { "zls" },
     -- Not sure if this is valid
