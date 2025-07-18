@@ -134,17 +134,61 @@ lspconfig.angularls.setup {
 lspconfig.astro.setup {
     capabilities = capabilities,
     autostart = true,
-    use_git_ignore = true,
-    filetypes = { 'astro' }
+    cmd = { "astro-ls", "--stdio" },
+    filetypes = { 'astro' },
+    root_dir = function(fname)
+        return lspconfig.util.root_pattern('astro.config.mjs', 'astro.config.js', 'astro.config.ts', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname)
+            or lspconfig.util.path.dirname(fname)
+    end,
+    init_options = {
+        typescript = {
+            tsdk = vim.fs.normalize("~/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib")
+        }
+    },
+    settings = {
+        astro = {
+            format = {
+                indentFrontmatter = true,
+                braceStyle = "1tbs",
+                jsxBracketSameLine = true,
+                semiColons = "ignore",
+                quoteProps = "as-needed",
+                trailingCommas = "all",
+                bracketSpacing = true,
+                bracketSameLine = false,
+                tabWidth = 2,
+                insertSpaces = true,
+                arrowParens = "avoid",
+                printWidth = 80,
+                quoteStyle = "single",
+                expressionKind = "preserve",
+                astroAllowShorthand = true,
+                endOfLine = "lf",
+                embedLanguageFormatting = "preserve",
+                htmlWhitespaceSensitivity = "ignore",
+                htmlJsxBracketSameLine = true,
+                htmlJsxSingleQuote = true,
+                htmlSelfClosingStyle = "component",
+                htmlVoidElements = true,
+                proseWrap = "preserve",
+                rangeStart = 0,
+                rangeEnd = 0,
+                cursorOffset = -1,
+                parser = "astro",
+                pluginSearchDirs = {}
+            }
+        }
+    }
 }
 
 -- for syntax highlighting
 vim.g.astro_typescript = 'enable'
 vim.g.astro_stylus = 'enable'
--- for mdx support
+-- for mdx and astro support
 vim.filetype.add({
     extension = {
         mdx = "markdown.mdx",
+        astro = "astro",
     },
     filename = {},
     pattern = {},
