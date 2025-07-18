@@ -134,7 +134,10 @@ lspconfig.angularls.setup {
 lspconfig.astro.setup {
     capabilities = capabilities,
     autostart = true,
+    use_git_ignore = true,
+    filetypes = { 'astro' }
 }
+
 -- for syntax highlighting
 vim.g.astro_typescript = 'enable'
 vim.g.astro_stylus = 'enable'
@@ -155,17 +158,12 @@ lspconfig.denols.setup {
 
 vim.g.markdown_fenced_languages = { "ts=typescript" }
 
-lspconfig.ts_ls.setup {
-    capabilities = capabilities,
-    root_dir = lspconfig.util.root_pattern("package.json"),
-    single_file_support = false
-}
 -- Tailwind
 lspconfig.tailwindcss.setup({
     capabilities = capabilities,
     filetypes = {
         'html', 'css', 'scss', 'javascript', 'javascriptreact',
-        'typescript', 'typescriptreact', 'svelte',
+        'typescript', 'typescriptreact', 'svelte', 'astro',
     },
     settings = {
         tailwindCSS = {

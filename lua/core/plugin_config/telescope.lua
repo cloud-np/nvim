@@ -81,12 +81,8 @@ require('telescope').setup {
     pickers = {
         find_files = {
             theme = 'dropdown',
-            previewer = true,
         },
         live_grep = {
-            preview = {
-                title = true
-            },
             layout_config = {
                 preview_width = 0.5,
             },

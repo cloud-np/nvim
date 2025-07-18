@@ -1,15 +1,15 @@
--- Define prefix descriptions
-local prefix_descriptions = {
-  ["<leader>b"] = "Buffer Management",
-  ["<leader>l"] = "Lsp Operations",
-  ["<leader>g"] = "Git",
-  ["<leader>r"] = "Refactoring with Lsp",
-  ["<leader>c"] = "Lsp Stuff Have to check again lol",
-  ["<leader>d"] = "Dap",
-  ["<leader>s"] = "Search",
-}
+-- Setup which-key with the new v3 API
+local wk = require("which-key")
 
--- Register these prefix descriptions
-for prefix, description in pairs(prefix_descriptions) do
-  require("which-key").register({ [prefix] = { name = description } })
-end
+wk.setup()
+
+-- Define prefix descriptions using the new add method
+wk.add({
+  { "<leader>b", group = "Buffer Management" },
+  { "<leader>l", group = "Lsp Operations" },
+  { "<leader>g", group = "Git" },
+  { "<leader>r", group = "Refactoring with Lsp" },
+  { "<leader>c", group = "Lsp Stuff" },
+  { "<leader>d", group = "Dap" },
+  { "<leader>s", group = "Search" },
+})

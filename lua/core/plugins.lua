@@ -15,7 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
     { 'catppuccin/nvim',      name = 'catppuccin', lazy = true },
-
     { 'glepnir/lspsaga.nvim', event = 'LspAttach' },
     {
         'folke/which-key.nvim',
@@ -30,11 +29,12 @@ local plugins = {
     { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} }, -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-    { 'echasnovski/mini.nvim',               version = '*' }, -- mini icons
-    'nvim-tree/nvim-web-devicons',                            -- Helps with nerdfonts in neovim?
-    'nvim-lualine/lualine.nvim',                              -- Status line at the bottom
+    { 'echasnovski/mini.nvim', version = '*' }, -- mini icons
+    { 'kiddos/gemini.nvim', opts = {} },
+    'nvim-tree/nvim-web-devicons', -- Helps with nerdfonts in neovim?
+    'nvim-lualine/lualine.nvim',   -- Status line at the bottom
     'nvim-treesitter/nvim-treesitter',
-    'tpope/vim-repeat',                                       -- Depedency for leap.nvim
+    'tpope/vim-repeat',            -- Depedency for leap.nvim
     -- 'ggandor/leap.nvim',
     {
         "luckasRanarison/tailwind-tools.nvim",
@@ -128,7 +128,7 @@ local plugins = {
     'williamboman/mason.nvim',
     'neovim/nvim-lspconfig',
     'williamboman/mason-lspconfig.nvim',
-    { 'nvim-telescope/telescope.nvim',            tag = '0.1.0', dependencies = { { 'nvim-lua/plenary.nvim' } } },
+    { 'nvim-telescope/telescope.nvim',            tag = '0.1.8', dependencies = { { 'nvim-lua/plenary.nvim' } } },
     -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release ; cmake --build build --config Release ; cmake --install build --prefix build' }
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
 }
