@@ -14,9 +14,26 @@ lspsaga.setup({
         show_file = true,
         file_formatter = ""
     },
+    hover = {
+        max_width = 0.6,
+        max_height = 0.8,
+        open_link = 'gx',
+        open_browser = '!chrome',
+    },
+    ui = {
+        title = true,
+        border = 'rounded',
+        winblend = 0,
+        expand = '',
+        collapse = '',
+        code_action = '💡',
+        incoming = ' ',
+        outgoing = ' ',
+        hover = ' ',
+        kind = {},
+    },
 })
 
-keymap('n', 'K', '<Cmd>Lspsaga hover_doc<cr>', { silent = true })
 keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
 -- Insert this in your on_attach function
 -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', {noremap = true, silent = true})
@@ -194,6 +211,29 @@ vim.filetype.add({
     pattern = {},
 })
 
+-- Svelte
+lspconfig.svelte.setup {
+    capabilities = capabilities,
+    filetypes = { "svelte" },
+    settings = {
+        svelte = {
+            plugin = {
+                html = {
+                    completions = {
+                        enable = true,
+                        emmet = false,
+                    },
+                },
+                svelte = {
+                    completions = {
+                        enable = true,
+                    },
+                },
+            },
+        },
+    },
+}
+
 -- Deno
 lspconfig.denols.setup {
     capabilities = capabilities,
@@ -307,12 +347,8 @@ keymap("n", "<leader>o", "<cmd>Lspsaga outline<CR>")
 -- Pressing the key twice will enter the hover window
 keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
--- If you want to keep the hover window in the top right hand corner,
--- you can pass the ++keep argument
--- Note that if you use hover with ++keep, pressing this key again will
--- close the hover window. If you want to jump to the hover window
--- you should use the wincmd command "<C-w>w"
-keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+-- Hover documentation - appears relative to cursor position
+keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
 -- Call hierarchy
 keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", { desc = "[C]alls [I]ncoming hierarchy" })

@@ -24,8 +24,39 @@ keymap('n', '<a-l>', ':wincmd l<CR>')
 -- keymap('n', '', ':bnext<CR>', { noremap = true, silent = true })
 -- keymap('n', '', ':bprev<CR>', { noremap = true, silent = true })
 
+-- Smart buffer close function that switches to next buffer
+local function smart_buffer_close()
+    local current_buf = vim.api.nvim_get_current_buf()
+    local buffers = vim.api.nvim_list_bufs()
+    
+    -- Filter to get only valid, listed buffers that aren't NvimTree
+    local valid_buffers = {}
+    for _, buf in ipairs(buffers) do
+        if vim.api.nvim_buf_is_valid(buf) and 
+           vim.api.nvim_buf_get_option(buf, 'buflisted') and
+           vim.api.nvim_buf_get_option(buf, 'filetype') ~= 'NvimTree' then
+            table.insert(valid_buffers, buf)
+        end
+    end
+    
+    -- If we have more than one valid buffer, switch to another before closing
+    if #valid_buffers > 1 then
+        -- Find next buffer that's not the current one
+        for _, buf in ipairs(valid_buffers) do
+            if buf ~= current_buf then
+                vim.api.nvim_set_current_buf(buf)
+                break
+            end
+        end
+    end
+    
+    -- Close the original buffer
+    vim.cmd('bdelete! ' .. current_buf)
+end
+
 -- Close current buffer
-keymap('n', '<leader>bd', ':bd<CR>', { desc = "Close Buffer", silent = true, noremap = true })
+keymap('n', '<leader>bd', smart_buffer_close, { desc = "Close Buffer", silent = true, noremap = true })
+keymap('n', '<C-w>', smart_buffer_close, { desc = "Close Buffer", silent = true, noremap = true })
 
 keymap('n', '<leader>h', ':nohlsearch<CR>')
 

@@ -29,8 +29,8 @@ local plugins = {
     { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} }, -- Better UI indentantion in files
     -- 'Yggdroot/indentLine',
     'nvim-tree/nvim-tree.lua',
-    { 'echasnovski/mini.nvim', version = '*' }, -- mini icons
-    { 'kiddos/gemini.nvim', opts = {} },
+    { 'echasnovski/mini.nvim',               version = '*' }, -- mini icons
+    'kiddos/gemini.nvim',
     'nvim-tree/nvim-web-devicons', -- Helps with nerdfonts in neovim?
     'nvim-lualine/lualine.nvim',   -- Status line at the bottom
     'nvim-treesitter/nvim-treesitter',
