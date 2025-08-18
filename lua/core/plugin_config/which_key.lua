@@ -1,15 +1,15 @@
--- Setup which-key with the new v3 API
+-- Setup which-key
 local wk = require("which-key")
 
 wk.setup()
 
--- Define prefix descriptions using the new add method
-wk.add({
-  { "<leader>b", group = "Buffer Management" },
-  { "<leader>l", group = "Lsp Operations" },
-  { "<leader>g", group = "Git" },
-  { "<leader>r", group = "Refactoring with Lsp" },
-  { "<leader>c", group = "Lsp Stuff" },
-  { "<leader>d", group = "Dap" },
-  { "<leader>s", group = "Search" },
-})
+-- Define prefix descriptions using the register method
+wk.register({
+  b = { name = "Buffer Management" },
+  l = { name = "Lsp Operations" },
+  g = { name = "Git" },
+  r = { name = "Refactoring with Lsp" },
+  c = { name = "Lsp Stuff" },
+  d = { name = "Dap" },
+  s = { name = "Search" },
+}, { prefix = "<leader>" })
