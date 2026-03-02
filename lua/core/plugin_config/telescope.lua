@@ -26,7 +26,7 @@ require('telescope').setup {
           local tail = require("telescope.utils").path_tail(path)
           return string.format("%s (%s)", tail, path), { { { 1, #tail }, "Constant" } }
         end,
-        matching_strategy = "exact",
+        matching_strategy = "fuzzy",
         preview_width = 0.4,
         mappings = {
             i = {
@@ -35,6 +35,7 @@ require('telescope').setup {
                 ['<C-j>'] = actions.move_selection_next,
                 ['<C-k>'] = actions.move_selection_previous,
                 ['<C-w>'] = actions.delete_buffer,
+                ['<C-v>'] = { '<C-r>+', type = 'command' },
             },
         },
         file_sorter = require('telescope.sorters').get_fzy_sorter,
@@ -123,6 +124,7 @@ keymap('n', '<leader>gbc', builtin.git_bcommits, { desc = 'Search [G]it [B]uffer
 keymap('n', '<leader>gs', builtin.git_status, { desc = 'Search [G]it [S]tatus' })
 
 
+keymap('n', '<leader>sb', function() require('telescope').extensions.vim_bookmarks.all() end, { desc = '[S]earch [B]ookmarks' })
 keymap('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
 keymap('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
 keymap('n', '<leader>sf', find_files, { desc = '[S]earch [F]iles' })
@@ -138,6 +140,22 @@ keymap('n', '<leader>s/', function()
         previewer = false,
     })
 end, { desc = '[Seacrh][/] Fuzzily search in current buffer' })
+
+local defaults = { '--glob', '!*svg.ts' }
+
+-- Dynamic grep with file type filter
+keymap('n', '<leader>sg', function()
+    vim.ui.input({ prompt = 'File glob (e.g. *.rs): ' }, function(pattern)
+        if pattern and pattern ~= '' then
+            live_grep({
+                additional_args = function()
+                    return helpers.concatArrays({ '--glob', pattern }, defaults)
+                end,
+                prompt_title = 'Grep (' .. pattern .. ')',
+            })
+        end
+    end)
+end, { desc = '[S]earch by [G]rep with file filter' })
 
 local grep_configs = {
     {
@@ -189,8 +207,6 @@ local grep_configs = {
         prompt_title = 'Actions'
     },
 }
-
-local defaults = { '--glob', '!*svg.ts' }
 
 for _, config in ipairs(grep_configs) do
     keymap('n', config.hotkey, function()

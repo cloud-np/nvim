@@ -3,14 +3,14 @@ local keymap = vim.keymap.set
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local lspsaga = require('lspsaga')
-local lspconfig = require('lspconfig')
+local lsp_util = require('lspconfig.util')
 
 lspsaga.setup({
     code_action_icon = "💡",
     symbol_in_winbar = {
         in_custom = false,
         enable = true,
-        separator = ' ',
+        separator = ' ',
         show_file = true,
         file_formatter = ""
     },
@@ -41,7 +41,7 @@ keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = tr
 keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
 
 -- Lua
-lspconfig.lua_ls.setup {
+vim.lsp.config('lua_ls', {
     capabilities = capabilities,
     settings = {
         Lua = {
@@ -56,16 +56,16 @@ lspconfig.lua_ls.setup {
             },
         },
     }
-}
+})
 
 -- Python
-lspconfig.pyright.setup {
+vim.lsp.config('pyright', {
     capabilities = capabilities,
     filetypes = { "python" },
-}
+})
 
 -- Go
-lspconfig.gopls.setup {
+vim.lsp.config('gopls', {
     capabilities = capabilities,
     cmd = { "gopls", "serve" },
     settings = {
@@ -76,7 +76,7 @@ lspconfig.gopls.setup {
             staticcheck = true,
         },
     },
-}
+})
 
 -- Define the function with a different name to avoid conflicts
 local function get_utf16_capabilities()
@@ -91,29 +91,36 @@ local function get_utf16_capabilities()
     return caps
 end
 
--- Then use the function in your setup
-lspconfig.rust_analyzer.setup({
+-- Rust
+vim.lsp.config('rust_analyzer', {
     capabilities = get_utf16_capabilities(),
     offset_encoding = "utf-16",
+    settings = {
+        ["rust-analyzer"] = {
+            check = {
+                command = "clippy",
+            },
+        },
+    },
 })
 
 -- SQL
-lspconfig.sqlls.setup {
+vim.lsp.config('sqlls', {
     capabilities = capabilities,
     cmd = { "sql-language-server", "up", "--method", "stdio" },
     filetypes = { "sql" },
-    root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
-}
+    root_dir = lsp_util.root_pattern(".git", vim.fn.getcwd()),
+})
 
 -- Javascript/Typescript
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
     capabilities = capabilities,
     init_options = { hostInfo = 'neovim' },
     cmd = { "typescript-language-server", "--stdio" },
     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     root_dir = function(fname)
-        return lspconfig.util.root_pattern('package.json', 'tsconfig.json', '.git')(fname) or
-            lspconfig.util.path.dirname(fname)
+        return lsp_util.root_pattern('package.json', 'tsconfig.json', '.git')(fname) or
+            lsp_util.path.dirname(fname)
     end,
     -- Old config for tsserver not sure if applicable
     -- on_attach = function(client, bufnr)
@@ -127,13 +134,12 @@ lspconfig.ts_ls.setup {
             tabSize = 4,
         }
     }
-}
+})
 
 -- Angular
-local util = require("lspconfig.util")
-local root_dir = util.root_pattern("nx.json", "angular.json", "project.json")
+local root_dir = lsp_util.root_pattern("nx.json", "angular.json", "project.json")
 
-lspconfig.angularls.setup {
+vim.lsp.config('angularls', {
     -- To verify that an Angular lsp is installed globally or locally.
     -- cmd = {"node", "/path/to/angular-language-service/packages/server/index.js", "--stdio"},
     -- on_new_config = function(new_config, new_root_dir)
@@ -145,17 +151,17 @@ lspconfig.angularls.setup {
     -- end,
     root_dir = root_dir,
     capabilities = capabilities,
-}
+})
 
 -- Astro
-lspconfig.astro.setup {
+vim.lsp.config('astro', {
     capabilities = capabilities,
     autostart = true,
     cmd = { "astro-ls", "--stdio" },
     filetypes = { 'astro' },
     root_dir = function(fname)
-        return lspconfig.util.root_pattern('astro.config.mjs', 'astro.config.js', 'astro.config.ts', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname)
-            or lspconfig.util.path.dirname(fname)
+        return lsp_util.root_pattern('astro.config.mjs', 'astro.config.js', 'astro.config.ts', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname)
+            or lsp_util.path.dirname(fname)
     end,
     init_options = {
         typescript = {
@@ -196,7 +202,7 @@ lspconfig.astro.setup {
             }
         }
     }
-}
+})
 
 -- for syntax highlighting
 vim.g.astro_typescript = 'enable'
@@ -212,7 +218,7 @@ vim.filetype.add({
 })
 
 -- Svelte
-lspconfig.svelte.setup {
+vim.lsp.config('svelte', {
     capabilities = capabilities,
     filetypes = { "svelte" },
     settings = {
@@ -232,18 +238,18 @@ lspconfig.svelte.setup {
             },
         },
     },
-}
+})
 
 -- Deno
-lspconfig.denols.setup {
+vim.lsp.config('denols', {
     capabilities = capabilities,
-    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-}
+    root_dir = lsp_util.root_pattern("deno.json", "deno.jsonc"),
+})
 
 vim.g.markdown_fenced_languages = { "ts=typescript" }
 
 -- Tailwind
-lspconfig.tailwindcss.setup({
+vim.lsp.config('tailwindcss', {
     capabilities = capabilities,
     filetypes = {
         'html', 'css', 'scss', 'javascript', 'javascriptreact',
@@ -263,13 +269,21 @@ lspconfig.tailwindcss.setup({
     }
 })
 
-lspconfig.zls.setup {
+-- Zig
+vim.lsp.config('zls', {
     capabilities = capabilities,
     -- Could be omitted check later
     cmd = { "zls" },
     -- Not sure if this is valid
-    -- root_dir = lspconfig.util.root_pattern("zls.toml"),
-}
+    -- root_dir = lsp_util.root_pattern("zls.toml"),
+})
+
+-- Enable all configured servers
+vim.lsp.enable({
+    'lua_ls', 'pyright', 'gopls', 'rust_analyzer', 'sqlls',
+    'ts_ls', 'angularls', 'astro', 'svelte', 'denols',
+    'tailwindcss', 'zls',
+})
 
 -- LSP finder - Find the symbol's definition
 -- If there is no definition, it will instead be hidden
@@ -347,8 +361,8 @@ keymap("n", "<leader>o", "<cmd>Lspsaga outline<CR>")
 -- Pressing the key twice will enter the hover window
 keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
--- Hover documentation - appears relative to cursor position
-keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+-- Show type/return type of symbol under cursor in a floating peek window
+keymap("n", "<C-k>", "<cmd>Lspsaga peek_type_definition<CR>", { desc = "Peek type definition" })
 
 -- Call hierarchy
 keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", { desc = "[C]alls [I]ncoming hierarchy" })

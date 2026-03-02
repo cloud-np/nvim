@@ -12,7 +12,7 @@ keymap('n', ']d', function() vim.diagnostic.jump({ count = 1, float = true }) en
 keymap('n', '[d', function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = 'Go to previous diagnostic message' })
 
 keymap('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+keymap('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostics list' })
 
 -- Navigate vim panes better
 keymap('n', '<a-k>', ':wincmd k<CR>')
@@ -20,9 +20,9 @@ keymap('n', '<a-j>', ':wincmd j<CR>')
 keymap('n', '<a-h>', ':wincmd h<CR>')
 keymap('n', '<a-l>', ':wincmd l<CR>')
 
--- TODO: Assign these
--- keymap('n', '', ':bnext<CR>', { noremap = true, silent = true })
--- keymap('n', '', ':bprev<CR>', { noremap = true, silent = true })
+-- Buffer navigation
+keymap('n', '<leader>bn', ':bnext<CR>', { desc = '[B]uffer [N]ext', noremap = true, silent = true })
+keymap('n', '<leader>bp', ':bprev<CR>', { desc = '[B]uffer [P]revious', noremap = true, silent = true })
 
 -- Smart buffer close function that switches to next buffer
 local function smart_buffer_close()
@@ -65,7 +65,7 @@ keymap('i', '<c-j>', 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { noremap = true, e
 keymap('i', '<c-k>', 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { noremap = true, expr = true, silent = true })
 
 -- Function to toggle buffer maximize/minimize
-keymap('n', '<leader>bt', function()
+keymap('n', '<leader>bz', function()
     if vim.g.maximized_buffer then
         -- Restore to equal sizes
         vim.cmd('winc =')
@@ -81,7 +81,7 @@ keymap('n', '<leader>bt', function()
         vim.cmd('vertical resize ' .. vim.o.columns)
         vim.g.maximized_buffer = true
     end
-end, { desc = "[T]oggle buffer size", silent = true })
+end, { desc = "[Z]oom buffer (toggle maximize)", silent = true })
 
 -- Buffer resizing
 keymap('n', '<c-Up>', ':resize -3<CR>', { silent = true })
