@@ -1,4 +1,17 @@
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "lua_ls",
+        "pyright",
+        "rust_analyzer",
+        "ts_ls",
+        "svelte",
+        "astro",
+        "eslint",
+        "tailwindcss",
+        "html",
+        "zls",
+    },
+})
 local keymap = vim.keymap.set
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -118,22 +131,7 @@ vim.lsp.config('ts_ls', {
     init_options = { hostInfo = 'neovim' },
     cmd = { "typescript-language-server", "--stdio" },
     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-    root_dir = function(fname)
-        return lsp_util.root_pattern('package.json', 'tsconfig.json', '.git')(fname) or
-            lsp_util.path.dirname(fname)
-    end,
-    -- Old config for tsserver not sure if applicable
-    -- on_attach = function(client, bufnr)
-    --     -- Optional: your additional configurations...
-    --     --
-    --     client.resolved_capabilities.document_formatting = true
-    -- end,
-    settings = {
-        documentFormatting = false,
-        documentFormattingParams = {
-            tabSize = 4,
-        }
-    }
+    root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
 })
 
 -- Angular
@@ -156,52 +154,17 @@ vim.lsp.config('angularls', {
 -- Astro
 vim.lsp.config('astro', {
     capabilities = capabilities,
-    autostart = true,
     cmd = { "astro-ls", "--stdio" },
     filetypes = { 'astro' },
-    root_dir = function(fname)
-        return lsp_util.root_pattern('astro.config.mjs', 'astro.config.js', 'astro.config.ts', 'package.json', 'tsconfig.json', 'jsconfig.json', '.git')(fname)
-            or lsp_util.path.dirname(fname)
-    end,
+    root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
     init_options = {
-        typescript = {
-            tsdk = vim.fs.normalize("~/.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib")
-        }
+        typescript = {},
     },
-    settings = {
-        astro = {
-            format = {
-                indentFrontmatter = true,
-                braceStyle = "1tbs",
-                jsxBracketSameLine = true,
-                semiColons = "ignore",
-                quoteProps = "as-needed",
-                trailingCommas = "all",
-                bracketSpacing = true,
-                bracketSameLine = false,
-                tabWidth = 2,
-                insertSpaces = true,
-                arrowParens = "avoid",
-                printWidth = 80,
-                quoteStyle = "single",
-                expressionKind = "preserve",
-                astroAllowShorthand = true,
-                endOfLine = "lf",
-                embedLanguageFormatting = "preserve",
-                htmlWhitespaceSensitivity = "ignore",
-                htmlJsxBracketSameLine = true,
-                htmlJsxSingleQuote = true,
-                htmlSelfClosingStyle = "component",
-                htmlVoidElements = true,
-                proseWrap = "preserve",
-                rangeStart = 0,
-                rangeEnd = 0,
-                cursorOffset = -1,
-                parser = "astro",
-                pluginSearchDirs = {}
-            }
-        }
-    }
+    before_init = function(_, config)
+        if config.init_options and config.init_options.typescript and not config.init_options.typescript.tsdk then
+            config.init_options.typescript.tsdk = lsp_util.get_typescript_server_path(config.root_dir)
+        end
+    end,
 })
 
 -- for syntax highlighting
@@ -220,14 +183,16 @@ vim.filetype.add({
 -- Svelte
 vim.lsp.config('svelte', {
     capabilities = capabilities,
+    cmd = { "svelteserver", "--stdio" },
     filetypes = { "svelte" },
+    root_markers = { 'package.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', '.git' },
     settings = {
         svelte = {
             plugin = {
                 html = {
                     completions = {
                         enable = true,
-                        emmet = false,
+                        emmet = true,
                     },
                 },
                 svelte = {
@@ -235,6 +200,16 @@ vim.lsp.config('svelte', {
                         enable = true,
                     },
                 },
+            },
+        },
+        typescript = {
+            inlayHints = {
+                parameterNames = { enabled = 'literals' },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
             },
         },
     },
@@ -278,11 +253,28 @@ vim.lsp.config('zls', {
     -- root_dir = lsp_util.root_pattern("zls.toml"),
 })
 
+-- ESLint (provides linting for HTML in Svelte/Astro when eslint-plugin-svelte/astro is installed)
+vim.lsp.config('eslint', {
+    capabilities = capabilities,
+    cmd = { "vscode-eslint-language-server", "--stdio" },
+    filetypes = {
+        'javascript', 'javascriptreact', 'javascript.jsx',
+        'typescript', 'typescriptreact', 'typescript.tsx',
+        'svelte', 'astro', 'html',
+    },
+    root_markers = { '.eslintrc', '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.json', '.eslintrc.yaml', '.eslintrc.yml', 'eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', 'eslint.config.ts', 'eslint.config.mts', 'eslint.config.cts' },
+    settings = {
+        validate = 'on',
+        format = { enable = true },
+        rulesCustomizations = {},
+    },
+})
+
 -- Enable all configured servers
 vim.lsp.enable({
     'lua_ls', 'pyright', 'gopls', 'rust_analyzer', 'sqlls',
     'ts_ls', 'angularls', 'astro', 'svelte', 'denols',
-    'tailwindcss', 'zls',
+    'tailwindcss', 'zls', 'eslint',
 })
 
 -- LSP finder - Find the symbol's definition
