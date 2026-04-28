@@ -1,8 +1,6 @@
 -- Disable default keymaps so we set our own
 vim.g.bookmark_no_default_key_mappings = 1
 
-require('telescope').load_extension('vim_bookmarks')
-
 local keymap = vim.keymap.set
 
 -- noremap must be false for <Plug> mappings

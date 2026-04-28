@@ -129,11 +129,31 @@ local plugins = {
     'williamboman/mason.nvim',
     'neovim/nvim-lspconfig',
     'williamboman/mason-lspconfig.nvim',
-    { 'nvim-telescope/telescope.nvim',            tag = '0.1.8', dependencies = { { 'nvim-lua/plenary.nvim' } } },
-    -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release ; cmake --build build --config Release ; cmake --install build --prefix build' }
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    {
+        'dmtrKovalenko/fff.nvim',
+        build = function()
+            -- Downloads a prebuilt binary or falls back to cargo build.
+            require('fff.download').download_or_build_binary()
+        end,
+        opts = {
+            debug = {
+                enabled = true,
+                show_scores = true,
+            },
+        },
+        lazy = false, -- The plugin lazy-initialises itself.
+        keys = {
+            { 'ff', function() require('fff').find_files() end, desc = 'FFFind files' },
+            { 'fg', function() require('fff').live_grep() end, desc = 'LiFFFe grep' },
+            {
+                'fz',
+                function() require('fff').live_grep({ grep = { modes = { 'fuzzy', 'plain' } } }) end,
+                desc = 'Live fffuzy grep',
+            },
+            { 'fc', function() require('fff').live_grep({ query = vim.fn.expand('<cword>') }) end, desc = 'Search current word' },
+        },
+    },
     'MattesGroeger/vim-bookmarks',
-    'tom-anders/telescope-vim-bookmarks.nvim',
 }
 
 local opts = {
